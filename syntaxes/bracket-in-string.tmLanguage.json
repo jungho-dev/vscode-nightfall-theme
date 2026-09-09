@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-  "scopeName": "urban.bracket-in-string.injection",
-  "injectionSelector": "L:string -string.regexp -comment",
+  "scopeName": "nightfall.bracket-in-string.injection",
+  "injectionSelector": "L:string -string.regexp -comment -meta.template.expression",
   "patterns": [
     {
       "include": "#brackets-in-string"

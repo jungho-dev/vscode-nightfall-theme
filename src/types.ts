@@ -1,6 +1,6 @@
 /**
  * @file types.ts
- * @description Urban Theme 산출물(테마 매니페스트·TextMate 문법)의 타입 계약
+ * @description Nightfall Theme 산출물(테마 매니페스트·TextMate 문법)의 타입 계약
  * @author Jungho
  */
 

@@ -1,6 +1,6 @@
-# Urban-Theme
+# Nightfall Theme
 
-Urban-Theme is a VS Code color theme built on the GitHub Dark Dimmed palette and tuned to match the syntax coloring of
+Nightfall Theme is a VS Code color theme built on the GitHub Dark Dimmed palette and tuned to match the syntax coloring of
 the `github.com` soft-dark code view. It replaces per-user `settings.json` color overrides with a single distributable
 theme, and adds key/value separation, in-string bracket emphasis, and nested-quote emphasis that the base theme does
 not provide.
@@ -42,12 +42,12 @@ not provide.
 | --- | --- |
 | 1 | Install the extension. |
 | 2 | Run `Preferences: Color Theme`. |
-| 3 | Select **Urban Theme**. |
+| 3 | Select **Nightfall Theme**. |
 
 Remove any `editor.tokenColorCustomizations`, `editor.semanticTokenColorCustomizations`, and
 `workbench.colorCustomizations` entries from `settings.json`; this theme owns them.
 
-Or run the `Urban Theme: Apply and Clean Conflicts` command from the Command Palette to select the theme and remove
+Or run the `Nightfall Theme: Apply and Clean Conflicts` command from the Command Palette to select the theme and remove
 those user-settings entries in one step.
 
 ## Base

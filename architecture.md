@@ -1,10 +1,10 @@
-# urban-theme Architecture
+# vscode-nightfall-theme Architecture
 
 ## Runtime Surface
 
 ```text
 package.json contributes.themes
-  -> themes/urban-color-theme.json
+  -> themes/nightfall-color-theme.json
   -> VS Code color registry (workbench colors)
   -> VS Code TextMate token color registry (tokenColors)
 
@@ -16,13 +16,13 @@ package.json contributes.grammars (injectTo)
 
 package.json contributes.commands + main
   -> out/extension.js (CommonJS, compiled from src/extension.ts)
-  -> command urban-theme.apply: set workbench.colorTheme + clear conflicting *Customizations
-  -> activationEvents onCommand:urban-theme.apply (lazy; idle startup unaffected)
+  -> command vscode-nightfall-theme.apply: set workbench.colorTheme + clear conflicting *Customizations
+  -> activationEvents onCommand:vscode-nightfall-theme.apply (lazy; idle startup unaffected)
 ```
 
 The theme and grammar contributions are fully declarative; VS Code reads them directly from `package.json` with no
-code. One optional command, `urban-theme.apply`, adds an activation entry (`main` -> `out/extension.js`,
-`activationEvents` -> `onCommand:urban-theme.apply`). Activation is lazy: the entry runs only when the command is
+code. One optional command, `vscode-nightfall-theme.apply`, adds an activation entry (`main` -> `out/extension.js`,
+`activationEvents` -> `onCommand:vscode-nightfall-theme.apply`). Activation is lazy: the entry runs only when the command is
 invoked, so idle startup is unaffected. Almost all `src/` TypeScript is a build-time generator, never shipped; the one
 exception is `src/extension.ts`, compiled to CommonJS through `tsconfig.extension.json` and shipped as `out/extension.js`
 via a `.vscodeignore` exception.
@@ -32,7 +32,7 @@ via a `.vscodeignore` exception.
 ```text
 src/
 |-- build.ts                 generator entry: assemble, validate, write (or --check)
-|-- extension.ts             runtime entry: urban-theme.apply command (shipped as out/extension.js)
+|-- extension.ts             runtime entry: vscode-nightfall-theme.apply command (shipped as out/extension.js)
 |-- palette.ts               single-source palette (9 project colors)
 |-- validate.ts              hex, palette, in-string-last, grammar-reference checks
 |-- logger.ts                build log output
@@ -62,7 +62,7 @@ src/palette.ts + theme/*.ts + grammars/*.ts
   -> src/build.ts
   -> validate (hex, palette membership, in-string-last, grammar references)
   -> serialize (2-space JSON, existing EOL preserved)
-  -> themes/urban-color-theme.json
+  -> themes/nightfall-color-theme.json
   -> syntaxes/bracket-in-string.tmLanguage.json
   -> syntaxes/tagged-template.tmLanguage.json
   -> syntaxes/nested-quote-single-in-double.tmLanguage.json
@@ -135,7 +135,7 @@ and embedded code falls back to base theme colors instead of the project rules.
 ## Semantic Highlighting
 
 ```text
-themes/urban-color-theme.json semanticHighlighting: false
+themes/nightfall-color-theme.json semanticHighlighting: false
   -> language servers stop contributing token colors
   -> TextMate rules become the only color source
 semanticTokenColors.comment: #7CA964

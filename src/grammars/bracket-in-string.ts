@@ -12,8 +12,8 @@ const SCHEMA = "https://raw.githubusercontent.com/martinring/tmlanguage/master/t
 export function buildBracketInString(): InjectionGrammar {
   return {
     $schema: SCHEMA,
-    scopeName: "urban.bracket-in-string.injection",
-    injectionSelector: "L:string -string.regexp -comment",
+    scopeName: "nightfall.bracket-in-string.injection",
+    injectionSelector: "L:string -string.regexp -comment -meta.template.expression",
     patterns: [
       {
         include: "#brackets-in-string",

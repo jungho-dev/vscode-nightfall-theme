@@ -12,7 +12,7 @@ import type { ThemeManifest } from "../types";
 // base 규칙 뒤에 프로젝트 규칙을 이어 붙여 오버라이드 우선순위를 유지함
 export function buildTheme(): ThemeManifest {
   return {
-    name: "Urban Theme",
+    name: "Nightfall Theme",
     colors: workbenchColors,
     semanticHighlighting: false,
     tokenColors: [...baseTokens, ...projectTokens],

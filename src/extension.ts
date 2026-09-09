@@ -1,12 +1,12 @@
 /**
  * @file extension.ts
- * @description Urban Theme 적용 및 충돌 색상 설정 정리 명령을 제공하는 런타임 진입점
+ * @description Nightfall Theme 적용 및 충돌 색상 설정 정리 명령을 제공하는 런타임 진입점
  * @author Jungho
  */
 
 import * as vscode from "vscode";
 
-const THEME_NAME = "Urban Theme";
+const THEME_NAME = "Nightfall Theme";
 
 // readme 가 제거를 요구하는 사용자 색상 커스터마이즈 키 (테마가 소유)
 const CONFLICT_KEYS = [
@@ -43,7 +43,7 @@ async function applyTheme(): Promise<void> {
 }
 
 export function activate(context: vscode.ExtensionContext): void {
-  context.subscriptions.push(vscode.commands.registerCommand("urban-theme.apply", applyTheme));
+  context.subscriptions.push(vscode.commands.registerCommand("vscode-nightfall-theme.apply", applyTheme));
 }
 
 export function deactivate(): void {}

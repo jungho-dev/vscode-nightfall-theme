@@ -64,7 +64,7 @@ function main(): void {
 
   const artifacts: Artifact[] = [
     {
-      path: resolve(ROOT, "themes/urban-color-theme.json"),
+      path: resolve(ROOT, "themes/nightfall-color-theme.json"),
       data: theme,
     },
     {

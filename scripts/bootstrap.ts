@@ -17,7 +17,7 @@ import type { ThemeManifest, TokenColor } from "../src/types";
 const HERE = dirname(fileURLToPath(import.meta.url));
 
 // 입력 로드
-const SOURCE = process.argv[2] ?? resolve(HERE, "../themes/urban-color-theme.json");
+const SOURCE = process.argv[2] ?? resolve(HERE, "../themes/nightfall-color-theme.json");
 const theme = JSON.parse(readFileSync(SOURCE, "utf8")) as ThemeManifest;
 
 // 토큰 분할 (base=이름 없음 / project=이름 있음)

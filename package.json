@@ -1,14 +1,14 @@
 {
-  "name": "urban-theme",
-  "displayName": "Urban Theme",
+  "name": "vscode-nightfall-theme",
+  "displayName": "Nightfall Theme",
   "description": "A dark color theme based on GitHub Dark Dimmed, with web-aligned token colors, key/value color distinction, and yellow brackets inside strings",
   "publisher": "JUNGHO",
   "icon": "logo.webp",
   "license": "Apache-2.0",
-  "version": "1.1.9",
+  "version": "1.2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jungho-dev/urban-theme.git"
+    "url": "https://github.com/jungho-dev/vscode-nightfall-theme.git"
   },
   "categories": [
     "Themes"
@@ -22,26 +22,26 @@
   ],
   "main": "./out/extension.js",
   "activationEvents": [
-    "onCommand:urban-theme.apply"
+    "onCommand:vscode-nightfall-theme.apply"
   ],
   "contributes": {
     "commands": [
       {
-        "command": "urban-theme.apply",
+        "command": "vscode-nightfall-theme.apply",
         "title": "Apply and Clean Conflicts",
-        "category": "Urban Theme"
+        "category": "Nightfall Theme"
       }
     ],
     "themes": [
       {
-        "label": "Urban Theme",
+        "label": "Nightfall Theme",
         "uiTheme": "vs-dark",
-        "path": "./themes/urban-color-theme.json"
+        "path": "./themes/nightfall-color-theme.json"
       }
     ],
     "grammars": [
       {
-        "scopeName": "urban.bracket-in-string.injection",
+        "scopeName": "nightfall.bracket-in-string.injection",
         "path": "./syntaxes/bracket-in-string.tmLanguage.json",
         "injectTo": [
           "source.js",
@@ -74,7 +74,7 @@
         ]
       },
       {
-        "scopeName": "urban.tagged-template.injection",
+        "scopeName": "nightfall.tagged-template.injection",
         "path": "./syntaxes/tagged-template.tmLanguage.json",
         "injectTo": [
           "source.js",
@@ -87,7 +87,7 @@
         ]
       },
       {
-        "scopeName": "urban.nested-quote-single-in-double.injection",
+        "scopeName": "nightfall.nested-quote-single-in-double.injection",
         "path": "./syntaxes/nested-quote-single-in-double.tmLanguage.json",
         "injectTo": [
           "text.html.basic",
@@ -95,7 +95,7 @@
         ]
       },
       {
-        "scopeName": "urban.nested-quote-double-in-single.injection",
+        "scopeName": "nightfall.nested-quote-double-in-single.injection",
         "path": "./syntaxes/nested-quote-double-in-single.tmLanguage.json",
         "injectTo": [
           "text.html.basic",

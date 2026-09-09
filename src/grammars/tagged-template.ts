@@ -137,7 +137,7 @@ export function buildTaggedTemplate(): InjectionGrammar {
 
   return {
     $schema: SCHEMA,
-    scopeName: "urban.tagged-template.injection",
+    scopeName: "nightfall.tagged-template.injection",
     injectionSelector: INJECTION_SELECTOR,
     patterns,
     repository,

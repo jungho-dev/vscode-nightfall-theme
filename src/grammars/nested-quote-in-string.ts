@@ -14,7 +14,7 @@ const SCHEMA = "https://raw.githubusercontent.com/martinring/tmlanguage/master/t
 export function buildNestedQuoteSingleInDouble(): InjectionGrammar {
   return {
     $schema: SCHEMA,
-    scopeName: "urban.nested-quote-single-in-double.injection",
+    scopeName: "nightfall.nested-quote-single-in-double.injection",
     injectionSelector: "L:string.quoted.double -string.regexp -string.template -comment",
     patterns: [
       {
@@ -34,7 +34,7 @@ export function buildNestedQuoteSingleInDouble(): InjectionGrammar {
 export function buildNestedQuoteDoubleInSingle(): InjectionGrammar {
   return {
     $schema: SCHEMA,
-    scopeName: "urban.nested-quote-double-in-single.injection",
+    scopeName: "nightfall.nested-quote-double-in-single.injection",
     injectionSelector: "L:string.quoted.single -string.regexp -string.template -comment",
     patterns: [
       {

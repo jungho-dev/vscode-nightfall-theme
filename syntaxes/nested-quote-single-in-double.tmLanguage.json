@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-  "scopeName": "urban.nested-quote-single-in-double.injection",
+  "scopeName": "nightfall.nested-quote-single-in-double.injection",
   "injectionSelector": "L:string.quoted.double -string.regexp -string.template -comment",
   "patterns": [
     {
