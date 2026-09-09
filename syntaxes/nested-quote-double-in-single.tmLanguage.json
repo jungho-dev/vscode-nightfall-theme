@@ -1,0 +1,16 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "scopeName": "urban.nested-quote-double-in-single.injection",
+  "injectionSelector": "L:string.quoted.single -string.regexp -string.template -comment",
+  "patterns": [
+    {
+      "include": "#nested-double"
+    }
+  ],
+  "repository": {
+    "nested-double": {
+      "match": "\"[^\"']*\"",
+      "name": "string.quoted.double.nested.in-string"
+    }
+  }
+}

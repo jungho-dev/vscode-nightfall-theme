@@ -28,6 +28,7 @@ export const projectTokens: TokenColor[] = [
       "variable",
       "variable.other.readwrite",
       "variable.other.object",
+      "variable.other.definition",
       "variable.parameter",
       "entity.name.variable",
       "meta.definition.variable",
@@ -194,15 +195,23 @@ export const projectTokens: TokenColor[] = [
     }
   },
   {
-    "name": "inline css property names / keyword values -> default text",
+    "name": "inline css property names -> blue (key/value distinction)",
     "scope": [
       "text.html source.css support.type.property-name",
       "text.html source.css meta.property-name",
+      "text.html source.css support.type.vendored.property-name",
+      "text.html meta.attribute.style support.type.property-name"
+    ],
+    "settings": {
+      "foreground": palette.blue
+    }
+  },
+  {
+    "name": "inline css keyword values -> default text",
+    "scope": [
       "text.html source.css support.constant.property-value",
       "text.html source.css support.constant.font-name",
       "text.html source.css support.constant.color",
-      "text.html source.css support.type.vendored.property-name",
-      "text.html meta.attribute.style support.type.property-name",
       "text.html meta.attribute.style support.constant.property-value"
     ],
     "settings": {
@@ -386,14 +395,14 @@ export const projectTokens: TokenColor[] = [
     }
   },
   {
-    "name": "css property names -> default text",
+    "name": "css property names -> blue (key/value distinction)",
     "scope": [
       "source.css support.type.property-name",
       "source.css meta.property-name",
       "source.css support.type.vendored.property-name"
     ],
     "settings": {
-      "foreground": palette.text
+      "foreground": palette.blue
     }
   },
   {
@@ -483,6 +492,15 @@ export const projectTokens: TokenColor[] = [
       "storage.type.struct",
       "storage.type.enum",
       "storage.type.interface"
+    ],
+    "settings": {
+      "foreground": palette.orange
+    }
+  },
+  {
+    "name": "java type names -> orange (type/variable distinction)",
+    "scope": [
+      "storage.type.java"
     ],
     "settings": {
       "foreground": palette.orange
@@ -582,6 +600,16 @@ export const projectTokens: TokenColor[] = [
     ],
     "settings": {
       "foreground": palette.blue
+    }
+  },
+  {
+    "name": "nested quotes inside strings -> tan (user)",
+    "scope": [
+      "string.quoted.single.nested.in-string",
+      "string.quoted.double.nested.in-string"
+    ],
+    "settings": {
+      "foreground": palette.tan
     }
   },
   {

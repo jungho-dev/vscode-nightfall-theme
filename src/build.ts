@@ -12,6 +12,7 @@ import { fileURLToPath } from "node:url";
 import { buildTheme } from "./theme/theme";
 import { buildBracketInString } from "./grammars/bracket-in-string";
 import { buildTaggedTemplate } from "./grammars/tagged-template";
+import { buildNestedQuoteSingleInDouble, buildNestedQuoteDoubleInSingle } from "./grammars/nested-quote-in-string";
 import { validate } from "./validate";
 import { logger } from "./logger";
 
@@ -41,7 +42,12 @@ function relative(path: string): string {
 function main(): void {
   const check = process.argv.includes("--check");
   const theme = buildTheme();
-  const grammars = [buildBracketInString(), buildTaggedTemplate()];
+  const grammars = [
+    buildBracketInString(),
+    buildTaggedTemplate(),
+    buildNestedQuoteSingleInDouble(),
+    buildNestedQuoteDoubleInSingle(),
+  ];
 
   // 검증: 경고는 출력하고, 오류가 있으면 기록 없이 중단함
   const result = validate(theme, grammars);
@@ -68,6 +74,14 @@ function main(): void {
     {
       path: resolve(ROOT, "syntaxes/tagged-template.tmLanguage.json"),
       data: grammars[1],
+    },
+    {
+      path: resolve(ROOT, "syntaxes/nested-quote-single-in-double.tmLanguage.json"),
+      data: grammars[2],
+    },
+    {
+      path: resolve(ROOT, "syntaxes/nested-quote-double-in-single.tmLanguage.json"),
+      data: grammars[3],
     },
   ];
 

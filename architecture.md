@@ -13,17 +13,26 @@ package.json contributes.grammars (injectTo)
   -> injectionSelector L:string
   -> scope punctuation.bracket.in-string
   -> tokenColors rule -> #F2CC60
+
+package.json contributes.commands + main
+  -> out/extension.js (CommonJS, compiled from src/extension.ts)
+  -> command urban-theme.apply: set workbench.colorTheme + clear conflicting *Customizations
+  -> activationEvents onCommand:urban-theme.apply (lazy; idle startup unaffected)
 ```
 
-The extension contributes no activation code. It has no `main` entry and no `activationEvents`; VS Code reads the theme
-and grammar declarations directly from `package.json`. Nothing runs at runtime, so the fastest possible startup is the
-current one. The `src/` TypeScript is a build-time generator only, never shipped.
+The theme and grammar contributions are fully declarative; VS Code reads them directly from `package.json` with no
+code. One optional command, `urban-theme.apply`, adds an activation entry (`main` -> `out/extension.js`,
+`activationEvents` -> `onCommand:urban-theme.apply`). Activation is lazy: the entry runs only when the command is
+invoked, so idle startup is unaffected. Almost all `src/` TypeScript is a build-time generator, never shipped; the one
+exception is `src/extension.ts`, compiled to CommonJS through `tsconfig.extension.json` and shipped as `out/extension.js`
+via a `.vscodeignore` exception.
 
 ## Source Map
 
 ```text
 src/
 |-- build.ts                 generator entry: assemble, validate, write (or --check)
+|-- extension.ts             runtime entry: urban-theme.apply command (shipped as out/extension.js)
 |-- palette.ts               single-source palette (9 project colors)
 |-- validate.ts              hex, palette, in-string-last, grammar-reference checks
 |-- logger.ts                build log output
@@ -35,6 +44,7 @@ src/
 |-- grammars/
 |   |-- languages.ts        embedded-language table (tagged templates)
 |   |-- bracket-in-string.ts in-string bracket injection builder
+|   |-- nested-quote-in-string.ts nested-quote injection builders (single-in-double, double-in-single)
 |   `-- tagged-template.ts   tagged-template injection builder (table-driven)
 scripts/
 `-- bootstrap.ts             one-time: derive vendor.ts + tokens.ts from the shipped theme
@@ -42,7 +52,7 @@ bench/
 |-- tokenize-bench.mjs       tokenization behavior-parity + speed harness
 `-- baseline/               committed grammar snapshot used as the parity fixture
 themes/, syntaxes/           generated artifacts (shipped)
-out/                         compiled generator (tsc), git- and vsix-ignored
+out/                         compiled output (tsc), git-ignored; only out/extension.js is shipped (vsix exception)
 ```
 
 ## Build Pipeline
@@ -55,11 +65,15 @@ src/palette.ts + theme/*.ts + grammars/*.ts
   -> themes/urban-color-theme.json
   -> syntaxes/bracket-in-string.tmLanguage.json
   -> syntaxes/tagged-template.tmLanguage.json
+  -> syntaxes/nested-quote-single-in-double.tmLanguage.json
+  -> syntaxes/nested-quote-double-in-single.tmLanguage.json
 ```
 
 Commands: `bun run generate` writes the artifacts, `bun run validate` checks them against disk without writing,
-`bun run typecheck` type-checks the generator, `bun run bench` proves the generated grammars tokenize identically to
-the committed baseline and reports throughput. The generated theme and in-string grammar are byte-identical to the
+`bun run typecheck` type-checks the generator and the runtime entry, `bun run compile:extension` emits
+`out/extension.js` (CommonJS), and `bun run vscode:prepublish` regenerates artifacts then compiles the entry before
+packaging. `bun run bench` proves the generated grammars tokenize identically to the committed baseline and reports
+throughput. The generated theme and in-string grammar are byte-identical to the
 prior shipped artifacts; the tagged-template grammar is regenerated from `languages.ts` with identical tokenization
 behavior.
 
@@ -67,7 +81,7 @@ behavior.
 
 ```text
 GitHub Dark Dimmed base rules (index 0-48)
-  -> project rules (index 49-90)
+  -> project rules (index 49-93)
   -> later rule wins on equal scope specificity
 ```
 
