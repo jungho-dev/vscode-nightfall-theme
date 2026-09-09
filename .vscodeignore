@@ -1,14 +1,17 @@
 # .vscodeignore
 
-# 소스 코드 (번들링되므로 제외)
+# 소스 코드 (빌드 산출물 JSON 만 배포하므로 제외)
 **/src/**
+**/scripts/**
+**/bench/**
+**/out/**
 **/*.ts
-!out/**/*.js
 
 # 빌드 도구 및 설정
 **/.node/**
 **/*.cjs
 **/tsconfig*.json
+**/*.tsbuildinfo
 **/.eslintrc*
 **/.prettierrc*
 **/.babel*
@@ -70,4 +73,3 @@
 **/node_modules/**/.eslintrc*
 **/node_modules/**/tsconfig.json
 **/node_modules/**/*.map
-!out/node_modules/**

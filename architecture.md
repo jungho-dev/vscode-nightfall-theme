@@ -16,18 +16,52 @@ package.json contributes.grammars (injectTo)
 ```
 
 The extension contributes no activation code. It has no `main` entry and no `activationEvents`; VS Code reads the theme
-and grammar declarations directly from `package.json`. Nothing is compiled, so `out/` is absent by design.
+and grammar declarations directly from `package.json`. Nothing runs at runtime, so the fastest possible startup is the
+current one. The `src/` TypeScript is a build-time generator only, never shipped.
 
 ## Source Map
 
 ```text
-themes/
-`-- urban-color-theme.json              name, semanticHighlighting flag, colors, tokenColors, semanticTokenColors
-syntaxes/
-|-- bracket-in-string.tmLanguage.json   injection grammar scoping brackets inside string literals
-`-- tagged-template.tmLanguage.json     injection grammar embedding real language grammars in tagged templates
-logo.webp                               marketplace icon, 1024x1024
+src/
+|-- build.ts                 generator entry: assemble, validate, write (or --check)
+|-- palette.ts               single-source palette (9 project colors)
+|-- validate.ts              hex, palette, in-string-last, grammar-reference checks
+|-- logger.ts                build log output
+|-- types.ts                 theme/grammar type contracts
+|-- theme/
+|   |-- vendor.ts            inherited GitHub Dark Dimmed workbench colors + base tokens (verbatim)
+|   |-- tokens.ts            project token rules referencing palette
+|   `-- theme.ts             assembles the theme manifest
+|-- grammars/
+|   |-- languages.ts        embedded-language table (tagged templates)
+|   |-- bracket-in-string.ts in-string bracket injection builder
+|   `-- tagged-template.ts   tagged-template injection builder (table-driven)
+scripts/
+`-- bootstrap.ts             one-time: derive vendor.ts + tokens.ts from the shipped theme
+bench/
+|-- tokenize-bench.mjs       tokenization behavior-parity + speed harness
+`-- baseline/               committed grammar snapshot used as the parity fixture
+themes/, syntaxes/           generated artifacts (shipped)
+out/                         compiled generator (tsc), git- and vsix-ignored
 ```
+
+## Build Pipeline
+
+```text
+src/palette.ts + theme/*.ts + grammars/*.ts
+  -> src/build.ts
+  -> validate (hex, palette membership, in-string-last, grammar references)
+  -> serialize (2-space JSON, existing EOL preserved)
+  -> themes/urban-color-theme.json
+  -> syntaxes/bracket-in-string.tmLanguage.json
+  -> syntaxes/tagged-template.tmLanguage.json
+```
+
+Commands: `bun run generate` writes the artifacts, `bun run validate` checks them against disk without writing,
+`bun run typecheck` type-checks the generator, `bun run bench` proves the generated grammars tokenize identically to
+the committed baseline and reports throughput. The generated theme and in-string grammar are byte-identical to the
+prior shipped artifacts; the tagged-template grammar is regenerated from `languages.ts` with identical tokenization
+behavior.
 
 ## Color Resolution Order
 
@@ -39,7 +73,7 @@ GitHub Dark Dimmed base rules (index 0-48)
 
 Project rules are appended after the base rules so they override them without editing inherited entries. Order matters
 for two pairs: generic string rules precede the object-literal key rules, and the in-string bracket rule is last so it
-survives the broad `string.quoted` overrides.
+survives the broad `string.quoted` overrides. `validate.ts` enforces that the in-string bracket rule stays last.
 
 ## Injection Grammar: In-String Brackets
 
@@ -67,9 +101,11 @@ json`` /* json */``    meta.embedded.block.json source.json        source.json
 sh``   /* bash */``    meta.embedded.block.shell source.shell      source.shell
 ```
 
-Each rule opens on the tag (or comment hint) plus a backtick, closes on the next backtick, and includes the target
-grammar. `${...}` is matched first so interpolated code is tokenized as JavaScript instead of being consumed by the
-embedded grammar.
+Each language contributes a tag rule and a comment-hint rule generated from `languages.ts`. Both open on the tag (or
+comment hint) plus a backtick, close on the next backtick, and include the target grammar. `${...}` is matched first so
+interpolated code is tokenized as JavaScript instead of being consumed by the embedded grammar. The rule count is kept
+at fourteen on purpose: vscode-textmate compiles all injection begin rules into one scanner, so merging rules does not
+reduce scan cost and measured slightly slower in `bench/tokenize-bench.mjs`.
 
 Two details make this work with the theme:
 
